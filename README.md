@@ -1,6 +1,6 @@
-# LeRobot ROS2 - SO101 Follower Arm
+# LeRobot ROS2 Assembly Line Project - SO101 Arms
 
-A ROS2 implementation for the SO101 follower robotic arm, providing complete integration with LeRobot framework including hardware interface, MoveIt motion planning, and topic-based control.
+A ROS2 implementation for the SO101 follower/leader robotic arm, providing complete hardware interface, MoveIt motion planning, and topic-based joint control. Adapted and based on AgRoboticsResearch code: https://github.com/AgRoboticsResearch/Lerobot_ros2.git
 
 ## 🤖 Overview
 
@@ -34,7 +34,7 @@ Hardware interface package providing:
 - Hardware abstraction layer
 - LeRobot integration utilities
 
-### `topic_based_ros2_control`
+### `robot_control`
 Generic topic-based control interface for:
 - Flexible control architectures
 - Custom control strategies
@@ -51,8 +51,8 @@ Generic topic-based control interface for:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AgRoboticsResearch/Lerobot_ros2.git
-cd Lerobot_ros2
+git clone https://github.com/ccha425/So101_assembly_ros2.git
+cd So101_assembly_ros2
 ```
 
 2. Install dependencies:
@@ -94,17 +94,14 @@ ros2 run so101_hw_interface so101_calibrate
 For manual joint control and visualization with the hardware interface:
 
 ```bash
-# Terminal 1: Launch robot visualization without GUI
-ros2 launch so101_follower_description display.launch.py \
-    use_gui:=false \
-    joint_states_topic:=/so101_follower/joint_states
+# Terminal 1: Launch follower robot harware nodes (hardware interface)
+ros2 launch so101_hw_interface remap_so101_followers_hw_motor_bridge_launch.py
 
-# Terminal 2: Start the motor bridge (hardware interface)
-ros2 run so101_hw_interface so101_motor_bridge
+# Terminal 2: Launch leader robot harware nodes (hardware interface)
+ros2 launch so101_hw_interface remap_so101_leaders_hw_motor_bridge_launch.py
 
-# Terminal 3: Launch joint state publisher GUI for manual control
-ros2 run joint_state_publisher_gui joint_state_publisher_gui \
-    --ros-args -r /joint_states:=/so101_follower/joint_commands
+# Terminal 3: Launch joint state publisher for all 4 robot arms for manual control
+ros2 run robot_control teleoperate_robots
 ```
 
 This setup allows you to:
@@ -136,30 +133,18 @@ This setup allows you to:
 - [MoveIt Integration](docs/moveit_integration.md)
 - [API Reference](docs/api_reference.md)
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙋‍♂️ Support
 
-For questions and support:
-- Open an issue on GitHub
-- Check the documentation
-- Join our community discussions
+WIP
 
 ## 🔗 Related Projects
 
 - [LeRobot](https://github.com/huggingface/lerobot) - Main LeRobot framework
 - [SO101 Hardware](https://github.com/TheRobotStudio/SO-ARM101) - Original hardware design
+- [ROS2 Integration](https://github.com/AgRoboticsResearch/Lerobot_ros2) - Single arm codebase
 
 ---
-
-**Made with ❤️ for the robotics community** 
