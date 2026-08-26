@@ -22,9 +22,15 @@ class Teleop_Publisher(Node):
         # Creates publisher nodes
         self.pub_1 = self.create_publisher(JointState, 'robot1_follower/joint_commands', 10)
         self.pub_2 = self.create_publisher(JointState, 'robot2_follower/joint_commands', 10)
+        self.pub_3 = self.create_publisher(JointState, 'robot3_follower/joint_commands', 10)
+        self.pub_4 = self.create_publisher(JointState, 'robot4_follower/joint_commands', 10)
         # Create subscriver nodes and assign callbacks for processing the data
         self.sub_1 = self.create_subscription(JointState, 'robot1_leader/joint_states', self.teleop_robot1_callback, 10)
         self.sub_2 = self.create_subscription(JointState, 'robot2_leader/joint_states', self.teleop_robot2_callback, 10)
+        self.sub_3 = self.create_subscription(JointState, 'robot3_leader/joint_states', self.teleop_robot3_callback, 10)
+        self.sub_4 = self.create_subscription(JointState, 'robot4_leader/joint_states', self.teleop_robot4_callback, 10)
+        
+        
         # Define operating frequency - how frequent should the code publish new datapoints
         timer_period = 0.0167  # seconds (60Hz)
         # create a scheduled timer callback function to ensure publishing at correct period
@@ -32,13 +38,22 @@ class Teleop_Publisher(Node):
         # Define variable for JointState() format
         self.joint_state_position_robot1 = JointState()
         self.joint_state_position_robot2 = JointState()
+        self.joint_state_position_robot3 = JointState()
+        self.joint_state_position_robot4 = JointState()
         # Iniitalize dummy positions and name format
         self.joint_state_position_robot1.name = ["shoulder_pan", "shoulder_lift","elbow_flex","wrist_flex","wrist_roll","gripper"]
         self.joint_state_position_robot1.position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.joint_state_position_robot2.name = ["shoulder_pan", "shoulder_lift","elbow_flex","wrist_flex","wrist_roll","gripper"]
         self.joint_state_position_robot2.position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.joint_state_position_robot3.name = ["shoulder_pan", "shoulder_lift","elbow_flex","wrist_flex","wrist_roll","gripper"]
+        self.joint_state_position_robot3.position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.joint_state_position_robot4.name = ["shoulder_pan", "shoulder_lift","elbow_flex","wrist_flex","wrist_roll","gripper"]
+        self.joint_state_position_robot4.position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.sub_1  # prevent unused variable warning
         self.sub_2  # prevent unused variable warning
+        self.sub_3  # prevent unused variable warning
+        self.sub_4  # prevent unused variable warning
+
 
     # data renamed as msg inside this callback
     # update robot position as the new position from leader when new data comes in
@@ -50,11 +65,22 @@ class Teleop_Publisher(Node):
     def teleop_robot2_callback(self, msg):
         self.joint_state_position_robot2.position=msg.position
         # self.get_logger().info(f'Publishing: {self.joint_state_position_robot2.position}')
- 
+    # update robot position as the new position from leader when new data comes in
+    def teleop_robot3_callback(self, msg):
+        self.joint_state_position_robot3.position=msg.position
+        # self.get_logger().info(f'Publishing: {self.joint_state_position_robot3.position}')
+
+    # update robot position as the new position from leader when new data comes in
+    def teleop_robot4_callback(self, msg):
+        self.joint_state_position_robot4.position=msg.position
+        # self.get_logger().info(f'Publishing: {self.joint_state_position_robot4.position}')
+    
     # Timer function to publish the currently stored data to the robots
     def timer_callback(self):
         self.pub_1.publish(self.joint_state_position_robot1)
         self.pub_2.publish(self.joint_state_position_robot2)
+        self.pub_3.publish(self.joint_state_position_robot3)
+        self.pub_4.publish(self.joint_state_position_robot4)
 
 def main(args=None):
     rclpy.init(args=args)

@@ -5,8 +5,8 @@ moveit_setup_assistant_config:
   srdf:
     relative_path: config/so101_follower.srdf
   package_settings:
-    author_name: hls
-    author_email: hls@zju.edu.cn
+    author_name: ccha425
+    author_email: ccha425@aucklanduni.ac.nz
     generated_timestamp: 1750213684
   control_xacro:
     command:
