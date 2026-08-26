@@ -36,8 +36,8 @@ Hardware interface package providing:
 
 ### `robot_control`
 Generic topic-based control interface for:
-- Flexible control architectures
-- Custom control strategies
+- Teleoperation
+- Custom control strategies and mulri-robot synced waypoints
 - Integration with external systems
 
 ## 🚀 Quick Start
@@ -73,12 +73,12 @@ source install/setup.bash
 ros2 launch so101_follower_description display.launch.py
 ```
 
-#### Launch MoveIt demo:
+#### Launch MoveIt demo WIP:
 ```bash
 ros2 launch so101_follower_moveit demo.launch.py
 ```
 
-#### Start hardware interface:
+#### Start hardware interface "single":
 ```bash
 ros2 launch so101_hw_interface so101_hw.launch.py
 ```
@@ -90,8 +90,8 @@ ros2 run so101_hw_interface so101_calibrate
 
 ## 🎛️ Advanced Usage
 
-### Hardware Control with Joint State Publisher
-For manual joint control and visualization with the hardware interface:
+### Hardware Control with Joint State Publisher and Teleoperation
+For manual joint control with the hardware interface:
 
 ```bash
 # Terminal 1: Launch follower robot harware nodes (hardware interface)
@@ -114,12 +114,10 @@ This setup allows you to:
 - `/so101_follower/joint_commands`: Desired joint positions to hardware
 - Use topic remapping (`-r`) to connect different components
 
-## 🔧 Configuration
+## 🔧 Configuration - single arm
 
 ### Hardware Setup
-- Connect Feetech servos via serial/USB interface
-- Update motor IDs in `config/so101_calibration.yaml`
-- Verify communication with `so101_motor_bridge`
+- WIP
 
 ### Calibration
 1. Run calibration script: `so101_calibrate`
@@ -128,10 +126,9 @@ This setup allows you to:
 
 ## 📚 Documentation
 
-- [Hardware Setup Guide](docs/hardware_setup.md)
-- [Calibration Process](docs/calibration.md)
-- [MoveIt Integration](docs/moveit_integration.md)
-- [API Reference](docs/api_reference.md)
+- [Hardware Setup Guide WIP](docs/hardware_setup.md)
+- [Calibration Process WIP](docs/calibration.md)
+
 
 ## 📄 License
 
